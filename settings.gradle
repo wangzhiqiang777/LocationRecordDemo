@@ -1,0 +1,3 @@
+include ':bootapp'
+include ':app'
+rootProject.name = "LocationRecordDemo"
