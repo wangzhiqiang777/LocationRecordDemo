@@ -21,14 +21,15 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.neusoft.qiangzi.locationrecorddemo.ILocationAidlInterface;
-import com.neusoft.qiangzi.locationrecorddemo.LocationModel;
-import com.neusoft.qiangzi.locationrecorddemo.MainActivity;
+import com.neusoft.qiangzi.locationrecorddemo.database.LocationModel;
+import com.neusoft.qiangzi.locationrecorddemo.activity.MainActivity;
 import com.neusoft.qiangzi.locationrecorddemo.R;
 
 import androidx.core.app.NotificationCompat;
 
 public class LocationRecordService extends Service {
     private static final String TAG = "LocationRecordService";
+    public static final String SERVICE_NAME = "com.neusoft.qiangzi.locationrecorddemo.service.LocationRecordService";
     Thread locationThread = null;
     LocationManager locaManager = null;
     private boolean locationThreadisRun;

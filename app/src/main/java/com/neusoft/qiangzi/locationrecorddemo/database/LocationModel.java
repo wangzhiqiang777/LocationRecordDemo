@@ -1,4 +1,4 @@
-package com.neusoft.qiangzi.locationrecorddemo;
+package com.neusoft.qiangzi.locationrecorddemo.database;
 
 import android.content.ContentValues;
 import android.content.Context;
