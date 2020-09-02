@@ -1,6 +1,7 @@
 package com.neusoft.qiangzi.locationrecorddemo.database;
 
 import android.location.Location;
+import android.location.LocationManager;
 
 import java.sql.Time;
 import java.util.Date;
@@ -9,6 +10,11 @@ public class LocationBean extends Location {
     int id;
     int recordId;
     Time recordTime;
+
+    public LocationBean() {
+        super(LocationManager.GPS_PROVIDER);
+    }
+
     public LocationBean(int recordId, Location l) {
         super(l);
         this.recordId = recordId;

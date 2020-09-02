@@ -11,6 +11,10 @@ import com.neusoft.qiangzi.locationrecorddemo.database.LocationBean;
 import com.neusoft.qiangzi.locationrecorddemo.database.LocationDBHelper;
 import com.neusoft.qiangzi.locationrecorddemo.database.LocationRecordBean;
 
+import java.sql.Time;
+import java.util.LinkedList;
+import java.util.List;
+
 public class LocationModel {
 
     private Context context;
@@ -99,6 +103,41 @@ public class LocationModel {
     public void insertLocation(Location l){
         LocationBean bean = new LocationBean(currentRecordId, l);
         insertLocation(bean);
+    }
+
+    public List<LocationRecordBean> getAllRecords() {
+        LocationDBHelper locationDBHelper = new LocationDBHelper(context);
+        SQLiteDatabase db = locationDBHelper.getReadableDatabase();
+        Cursor c = db.query(LocationDBHelper.RECORDS_TABLE, null, null, null, null, null, null);
+        List<LocationRecordBean> list = new LinkedList<>();
+        while (c.moveToNext()) {
+            LocationRecordBean bean = new LocationRecordBean();
+            bean.setId(c.getInt(0));
+            bean.setStartTime(new Time(c.getLong(c.getColumnIndex(LocationDBHelper.COLUMN_START_TIME))));
+            bean.setStopTime(new Time(c.getLong(c.getColumnIndex(LocationDBHelper.COLUMN_STOP_TIME))));
+            bean.setDistance(c.getDouble(c.getColumnIndex(LocationDBHelper.COLUMN_DISTANCE)));
+            list.add(bean);
+        }
+        db.close();
+        return list;
+    }
+
+    public List<LocationBean> getLocationsByRecordId(int id){
+        LocationDBHelper locationDBHelper = new LocationDBHelper(context);
+        SQLiteDatabase db = locationDBHelper.getReadableDatabase();
+        Cursor c = db.query(LocationDBHelper.LOCATIONS_TABLE, null, null, null, null, null, null);
+        List<LocationBean> list = new LinkedList<>();
+        while (c.moveToNext()) {
+            LocationBean bean = new LocationBean();
+            bean.setId(c.getInt(0));
+            bean.setRecordId(c.getInt(c.getColumnIndex(LocationDBHelper.COLUMN_START_TIME)));
+            bean.setRecordTime(new Time(c.getLong(c.getColumnIndex(LocationDBHelper.COLUMN_RECORD_TIME))));
+            bean.setLatitude(c.getDouble(c.getColumnIndex(LocationDBHelper.COLUMN_LATITUDE)));
+            bean.setLongitude(c.getDouble(c.getColumnIndex(LocationDBHelper.COLUMN_LONGITUDE)));
+            list.add(bean);
+        }
+        db.close();
+        return list;
     }
 
     private final double EARTH_RADIUS = 6378137.0;

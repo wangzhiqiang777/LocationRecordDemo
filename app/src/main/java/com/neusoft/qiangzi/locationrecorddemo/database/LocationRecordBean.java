@@ -9,13 +9,16 @@ public class LocationRecordBean {
     Time startTime;
     Time stopTime;
     double distance;
-    List<LocationBean> locationBeans = new LinkedList<>();
+    List<LocationBean> locationBeans;
 
     public LocationRecordBean() {
         startTime = new Time(System.currentTimeMillis());
         stopTime = new Time(System.currentTimeMillis());
     }
     void appendLocation(LocationBean l){
+        if(locationBeans == null){
+            locationBeans = new LinkedList<>();
+        }
         locationBeans.add(l);
     }
 
